@@ -47,7 +47,7 @@ spec:
     runnerScaleSetName: "straw-hat-runners-linux"  # patched
     runnerGroup: "default"                          # patched
     minRunners: 1
-    maxRunners: 10
+    maxRunners: 40
     containerMode:
       type: "dind"
     scaleSetLabels:

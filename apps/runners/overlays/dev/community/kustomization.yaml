@@ -1,0 +1,62 @@
+# =============================================================================
+# Community flavor runner overlay for dev (summerwind/actions-runner-controller)
+# =============================================================================
+# Deploys legacy community ARC controller + RunnerDeployment with:
+#   - replicas: 2 (minReplicas for HRA)
+#   - maxReplicas: 40
+#   - labels: community
+#   - runnerGroup: straw-hat-runners-linux-dev-community
+# =============================================================================
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../../base/community
+nameSuffix: -dev-community
+patches:
+  # Patch the RunnerDeployment
+  - patch: |
+      - op: replace
+        path: /metadata/name
+        value: "straw-hat-runners-linux-dev-community"
+      - op: replace
+        path: /spec/replicas
+        value: 2
+      - op: replace
+        path: /spec/template/spec/group
+        value: "straw-hat-runners-linux-dev-community"
+      - op: replace
+        path: /spec/template/spec/image
+        value: "ghcr.io/actions/actions-runner:latest"
+      - op: replace
+        path: /spec/template/spec/labels
+        value:
+          - self-hosted
+          - linux
+          - x64
+          - community
+    target:
+      kind: RunnerDeployment
+      name: runner-deployment
+---
+# Horizontal Runner Autoscaler for scaling up to 40
+apiVersion: actions.summerwind.dev/v1alpha1
+kind: HorizontalRunnerAutoscaler
+metadata:
+  name: straw-hat-runners-linux-dev-community-hra
+  namespace: actions-runner-system
+spec:
+  scaleTargetRef:
+    kind: RunnerDeployment
+    name: straw-hat-runners-linux-dev-community
+  minReplicas: 2
+  maxReplicas: 40
+  scaleUpTriggers:
+    - githubEvent:
+        workflowJob: {}
+      duration: "30m"
+  metrics:
+    - type: PercentageRunnersBusy
+      scaleUpThreshold: "0.75"
+      scaleDownThreshold: "0.25"
+      scaleUpFactor: "2"
+      scaleDownFactor: "0.5"
