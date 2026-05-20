@@ -38,5 +38,3 @@ patches:
     target:
       kind: RunnerDeployment
       name: runner-deployment
-      scaleUpFactor: "2"
-      scaleDownFactor: "0.5"
