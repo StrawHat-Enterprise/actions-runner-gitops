@@ -1,0 +1,7 @@
+# Namespace for community actions-runner-controller
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: actions-runner-system
+  labels:
+    toolkit.fluxcd.io/tenant: runners
