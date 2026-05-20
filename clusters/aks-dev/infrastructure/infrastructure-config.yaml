@@ -16,6 +16,6 @@ spec:
   prune: true
   postBuild:
     substitute:
-      KEYVAULT_URL: "https://actionrunnersgithubrunne.vault.azure.net"
+      KEYVAULT_URL: "https://platform01runnerseusdevk.vault.azure.net"
       AZURE_TENANT_ID: "fa7492f3-e949-4bd8-9963-e88b76996320"
       MANAGED_IDENTITY_CLIENT_ID: "b8089c8c-2a34-48e5-a614-7a4b262645d2"
