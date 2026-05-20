@@ -8,10 +8,10 @@ patches:
   - patch: |
       - op: replace
         path: /spec/values/runnerScaleSetName
-        value: "straw-hat-runners-linux-prod-kubernetes-novolume"
+        value: "straw-hat-runners-linux-prod-k8s-novol"
       - op: replace
         path: /spec/values/runnerGroup
-        value: "straw-hat-runners-linux-prod-kubernetes-novolume"
+        value: "straw-hat-runners-linux-prod-k8s-novol"
       - op: replace
         path: /spec/values/containerMode/type
         value: "kubernetes-novolume"
